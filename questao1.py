@@ -56,6 +56,7 @@ aula = requests.request("GET", url_conteudo, headers=headers, data=payload)
 aula=preparation_aula.orquestrador(json.loads(aula.text))
 aula = treatments.treat_conteudo(aula)
 st.markdown(type(aula))
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 splitter = RecursiveCharacterTextSplitter(
     chunk_size=1000,
     chunk_overlap=400,
@@ -67,6 +68,7 @@ for i in aula['sessao']:
     if i!='materia_id':
         conteudo=conteudo+aula[aula['sessao']==i]['conteudo'].item()
 docs = splitter.create_documents([conteudo])
+from langchain_community.vectorstores.chroma import Chroma
 db = Chroma.from_documents(docs, embeddings)
 retriever = db.as_retriever()
 best_docs=retriever.get_relevant_documents(questao, search_kwargs={"k": 2})
