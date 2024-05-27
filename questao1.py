@@ -34,7 +34,7 @@ def carregando_quiz(url_quiz,num_questao):
     quiz=preparation_teste.read_teste(json.loads(quiz.text))
     learningUnit=quiz[0]['learningUnit']
     quiz = treatments.treat_quiz(quiz)
-    
+    st.markdown(quiz)
     url_conteudo = f"https://cms-api-kroton.platosedu.io/api/v1/external/learning-units/{learningUnit}"
     aula = requests.request("GET", url_conteudo, headers=headers, data=payload)
     aula=preparation_aula.orquestrador(json.loads(aula.text))
