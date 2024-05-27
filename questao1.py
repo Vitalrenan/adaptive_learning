@@ -27,16 +27,15 @@ def carregando_quiz(url_quiz,num_questao):
     payload={}
     headers = {'Accept': 'application/json', 'x-secret': os.environ["ALEXANDRIA_SECRET"] }
     if url_quiz:
-        st.markdown('if')
         pass
     else:
-        st.markdown('else')
         url_quiz='https://cms-api-kroton.platosedu.io/api/v1/external/questions?learningUnits[]=c43265d4-22e5-45d1-be50-cd3a8ce50b2c&bankType=endOfUnit&quantity=5'
     quiz = requests.request("GET", url_quiz, headers=headers, data=payload)
     quiz=preparation_teste.read_teste(json.loads(quiz.text))
     learningUnit=quiz[0]['learningUnit']
     quiz = treatments.treat_quiz(quiz)
-
+    st.markdown(quiz)
+    
     url_conteudo = f"https://cms-api-kroton.platosedu.io/api/v1/external/learning-units/{learningUnit}"
     aula = requests.request("GET", url_conteudo, headers=headers, data=payload)
     aula=preparation_aula.orquestrador(json.loads(aula.text))
