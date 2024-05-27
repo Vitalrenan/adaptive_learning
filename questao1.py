@@ -42,10 +42,11 @@ def carregando_quiz(url_quiz,num_questao):
     questao = quiz[quiz['num_questao']==num_questao]['questao'].item() 
     alternas = quiz[quiz['num_questao']==num_questao]['alternativas'].item().split("',")
     alternas = [i.replace('[','').replace(']','').replace("'",'').replace(",",'').replace(r"\xa0",'') for i in alternas]
-    st.markdown(alternas)
     conteudo_relacionado=get_aula_rag(learningUnit=learningUnit, questao=questao) 
+    st.markdown(conteudo_relacionado)
     return quiz, num_questao, questao, alternas, conteudo_relacionado
 
+quiz, num_questao, questao, alternas, conteudo_relacionado = carregando_quiz(url_quiz,1)
 #read previous conversation
 try:
     with open('conversation.pickle', 'rb') as conversation_pkl:
