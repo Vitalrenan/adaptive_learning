@@ -18,3 +18,5 @@ jsonpointer==2.4
 jsonschema==4.21.1
 jsonschema-specifications==2023.12.1
 bs4==0.0.2
+pysqlite3-binary
+
