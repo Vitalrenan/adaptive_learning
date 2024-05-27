@@ -34,7 +34,6 @@ def carregando_quiz(url_quiz,num_questao):
     quiz=preparation_teste.read_teste(json.loads(quiz.text))
     learningUnit=quiz[0]['learningUnit']
     quiz = treatments.treat_quiz(quiz)
-    st.markdown(quiz)
     
     url_conteudo = f"https://cms-api-kroton.platosedu.io/api/v1/external/learning-units/{learningUnit}"
     aula = requests.request("GET", url_conteudo, headers=headers, data=payload)
@@ -43,7 +42,8 @@ def carregando_quiz(url_quiz,num_questao):
     questao = quiz[quiz['num_questao']==num_questao]['questao'].item() 
     alternas = quiz[quiz['num_questao']==num_questao]['alternativas'].item().split("',")
     alternas = [i.replace('[','').replace(']','').replace("'",'').replace(",",'').replace(r"\xa0",'') for i in alternas]
-    conteudo_relacionado=get_aula_rag(learningUnit=learningUnit, questao=questao)    
+    conteudo_relacionado=get_aula_rag(learningUnit=learningUnit, questao=questao) 
+    st.markdown(questao)
     return quiz, num_questao, questao, alternas, conteudo_relacionado
 
 #read previous conversation
