@@ -27,10 +27,10 @@ def carregando_quiz(url_quiz,num_questao):
     payload={}
     headers = {'Accept': 'application/json', 'x-secret': os.environ["ALEXANDRIA_SECRET"] }
     if url_quiz:
-        print('if')
+        st.markdown('if')
         pass
     else:
-        print('else')
+        st.markdown('else')
         url_quiz='https://cms-api-kroton.platosedu.io/api/v1/external/questions?learningUnits[]=c43265d4-22e5-45d1-be50-cd3a8ce50b2c&bankType=endOfUnit&quantity=5'
     quiz = requests.request("GET", url_quiz, headers=headers, data=payload)
     quiz=preparation_teste.read_teste(json.loads(quiz.text))
@@ -47,16 +47,6 @@ def carregando_quiz(url_quiz,num_questao):
     conteudo_relacionado=get_aula_rag(learningUnit=learningUnit, questao=questao)    
     return quiz, num_questao, questao, alternas, conteudo_relacionado
 
-#delete
-payload={}
-headers = {'Accept': 'application/json', 'x-secret': os.environ["ALEXANDRIA_SECRET"] }
-url_quiz='https://cms-api-kroton.platosedu.io/api/v1/external/questions?learningUnits[]=c43265d4-22e5-45d1-be50-cd3a8ce50b2c&bankType=endOfUnit&quantity=5'
-quiz = requests.request("GET", url_quiz, headers=headers, data=payload)
-quiz=preparation_teste.read_teste(json.loads(quiz.text))
-learningUnit=quiz[0]['learningUnit']
-quiz = treatments.treat_quiz(quiz)
-questao = quiz[quiz['num_questao']==num_questao]['questao'].item() 
-st.markdown(questao)
 #read previous conversation
 try:
     with open('conversation.pickle', 'rb') as conversation_pkl:
