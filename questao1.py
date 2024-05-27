@@ -69,6 +69,10 @@ for i in aula['sessao']:
         conteudo=conteudo+aula[aula['sessao']==i]['conteudo'].item()
 docs = splitter.create_documents([conteudo])
 from langchain_community.vectorstores.chroma import Chroma
+embeddings = AzureOpenAIEmbeddings(
+    azure_endpoint='https://openai-dados-lab-poc.openai.azure.com/',
+    api_key=os.environ["AZURE_OPENAI_API_KEY"]
+) 
 db = Chroma.from_documents(docs, embeddings)
 retriever = db.as_retriever()
 best_docs=retriever.get_relevant_documents(questao, search_kwargs={"k": 2})
