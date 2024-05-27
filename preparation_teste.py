@@ -22,7 +22,7 @@ def get_text_from_item(data,item):
     if text_content=='':
         return soup
     else:
-        conteudo = str(decoder(text_content))
+        conteudo = str(text_content)
         return conteudo
         
 def get_text_choices(data,item):
@@ -30,7 +30,7 @@ def get_text_choices(data,item):
     for alternativa in data[item]:
         soup = BeautifulSoup(alternativa['description'], 'html.parser')        
         text_content = ''.join([p.get_text() for p in soup.find_all('p')])
-        conteudo = str(decoder(text_content))
+        conteudo = str(text_content)
         lista_alternativas.append(conteudo)
         if alternativa['is_correct']==True:
             alt_correta=conteudo       
