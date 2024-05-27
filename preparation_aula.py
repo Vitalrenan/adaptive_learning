@@ -53,8 +53,3 @@ def orquestrador(data):
                 aula['sessao_'+str(sessao_de_aula['order'])]['obj_estudo_'+str(n)]=get_obj_to_text(objeto_de_aula) 
     return aula     
     
-                
-#EXECUÇÃO
-
-with open('request_aula.json', 'r', encoding='utf-8') as file:
-    data = json.load(file)
