@@ -42,8 +42,14 @@ def carregando_quiz(url_quiz,num_questao):
     alternas = [i.replace('[','').replace(']','').replace("'",'').replace(",",'').replace(r"\xa0",'') for i in alternas]
     conteudo_relacionado=get_aula_rag(learningUnit=learningUnit, questao=questao)    
     return quiz, num_questao, questao, alternas, conteudo_relacionado
-         
-        
+
+#delete
+url_quiz='https://cms-api-kroton.platosedu.io/api/v1/external/questions?learningUnits[]=c43265d4-22e5-45d1-be50-cd3a8ce50b2c&bankType=endOfUnit&quantity=5'
+quiz = requests.request("GET", url_quiz, headers=headers, data=payload)
+quiz=preparation_teste.read_teste(json.loads(quiz.text))
+learningUnit=quiz[0]['learningUnit']
+quiz = treatments.treat_quiz(quiz)
+
 #read previous conversation
 try:
     with open('conversation.pickle', 'rb') as conversation_pkl:
