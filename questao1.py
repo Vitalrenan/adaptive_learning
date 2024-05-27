@@ -50,6 +50,8 @@ def carregando_quiz(url_quiz,num_questao):
 ##
 learningUnit='c43265d4-22e5-45d1-be50-cd3a8ce50b2c'
 url_conteudo = f"https://cms-api-kroton.platosedu.io/api/v1/external/learning-units/{learningUnit}"
+payload={}
+headers = {'Accept': 'application/json', 'x-secret': os.environ["ALEXANDRIA_SECRET"] }
 aula = requests.request("GET", url_conteudo, headers=headers, data=payload)
 aula=preparation_aula.orquestrador(json.loads(aula.text))
 aula = treatments.treat_conteudo(aula)
