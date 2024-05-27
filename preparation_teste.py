@@ -1,14 +1,6 @@
 import json
 from bs4 import BeautifulSoup
 
-with open('request_teste.json', 'r') as file:
-    data = json.load(file)
-    
-def decoder(texto):
-    #texto = texto.encode('utf-8').decode('utf-8')
-    #texto = texto.encode('latin-1').decode('latin-1')
-    return texto
-    
 def read_teste(data):
     teste={}
     for num_questao in range(len(data)):
