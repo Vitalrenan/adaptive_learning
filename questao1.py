@@ -40,10 +40,11 @@ def carregando_quiz(url_quiz,num_questao):
     aula=preparation_aula.orquestrador(json.loads(aula.text))
     aula = treatments.treat_conteudo(aula)
     questao = quiz[quiz['num_questao']==num_questao]['questao'].item() 
+    st.markdown(questao)
     alternas = quiz[quiz['num_questao']==num_questao]['alternativas'].item().split("',")
+    st.markdown(alternas)
     alternas = [i.replace('[','').replace(']','').replace("'",'').replace(",",'').replace(r"\xa0",'') for i in alternas]
     conteudo_relacionado=get_aula_rag(learningUnit=learningUnit, questao=questao) 
-    st.markdown(questao,alternas)
     return quiz, num_questao, questao, alternas, conteudo_relacionado
 
 #read previous conversation
