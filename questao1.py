@@ -44,6 +44,8 @@ def carregando_quiz(url_quiz,num_questao):
     alternas = [i.replace('[','').replace(']','').replace("'",'').replace(",",'').replace(r"\xa0",'') for i in alternas]
     conteudo_relacionado=get_aula_rag(learningUnit=learningUnit, questao=questao) 
     st.markdown(questao)
+    st.markdown(alternas)
+    st.markdown(quiz)
     return quiz, num_questao, questao, alternas, conteudo_relacionado
 
 #read previous conversation
