@@ -45,7 +45,8 @@ def carregando_quiz(url_quiz,num_questao):
     conteudo_relacionado=get_aula_rag(learningUnit=learningUnit, questao=questao) 
     st.markdown(conteudo_relacionado)
     return quiz, num_questao, questao, alternas, conteudo_relacionado
-
+    
+url_quiz='https://cms-api-kroton.platosedu.io/api/v1/external/questions?learningUnits[]=c43265d4-22e5-45d1-be50-cd3a8ce50b2c&bankType=endOfUnit&quantity=5'
 quiz, num_questao, questao, alternas, conteudo_relacionado = carregando_quiz(url_quiz,1)
 #read previous conversation
 try:
