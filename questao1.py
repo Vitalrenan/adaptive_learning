@@ -69,6 +69,7 @@ for i in aula['sessao']:
         conteudo=conteudo+aula[aula['sessao']==i]['conteudo'].item()
 docs = splitter.create_documents([conteudo])
 from langchain_community.vectorstores.chroma import Chroma
+from langchain_openai import AzureOpenAIEmbeddings
 embeddings = AzureOpenAIEmbeddings(
     azure_endpoint='https://openai-dados-lab-poc.openai.azure.com/',
     api_key=os.environ["AZURE_OPENAI_API_KEY"]
