@@ -43,11 +43,33 @@ def carregando_quiz(url_quiz,num_questao):
     alternas = quiz[quiz['num_questao']==num_questao]['alternativas'].item().split("',")
     alternas = [i.replace('[','').replace(']','').replace("'",'').replace(",",'').replace(r"\xa0",'') for i in alternas]
     conteudo_relacionado=get_aula_rag(learningUnit=learningUnit, questao=questao) 
-    st.markdown(conteudo_relacionado)
     return quiz, num_questao, questao, alternas, conteudo_relacionado
     
 url_quiz='https://cms-api-kroton.platosedu.io/api/v1/external/questions?learningUnits[]=c43265d4-22e5-45d1-be50-cd3a8ce50b2c&bankType=endOfUnit&quantity=5'
-quiz, num_questao, questao, alternas, conteudo_relacionado = carregando_quiz(url_quiz,1)
+url_conteudo = f"https://cms-api-kroton.platosedu.io/api/v1/external/learning-units/c43265d4-22e5-45d1-be50-cd3a8ce50b2"
+payload={}
+headers = {'Accept': 'application/json', 'x-secret': os.environ["ALEXANDRIA_SECRET"] }
+aula = requests.request("GET", url_conteudo, headers=headers, data=payload)
+aula=preparation_aula.orquestrador(json.loads(aula.text))
+aula = treatments.treat_conteudo(aula)
+
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1000,
+    chunk_overlap=400,
+    length_function=len,
+    is_separator_regex=False
+    )
+
+conteudo=''
+for i in aula['sessao']:
+    if i!='materia_id':
+        conteudo=conteudo+aula[aula['sessao']==i]['conteudo'].item()
+        
+docs = splitter.create_documents([conteudo])
+db = Chroma.from_documents(docs, embeddings)
+retriever = db.as_retriever()
+best_docs=retriever.get_relevant_documents(questao, search_kwargs={"k": 2})
+best_docs = "".join([best_docs[i].page_content for i in range(len(best_docs))])
 #read previous conversation
 try:
     with open('conversation.pickle', 'rb') as conversation_pkl:
