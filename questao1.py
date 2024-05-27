@@ -55,7 +55,7 @@ headers = {'Accept': 'application/json', 'x-secret': os.environ["ALEXANDRIA_SECR
 aula = requests.request("GET", url_conteudo, headers=headers, data=payload)
 aula=preparation_aula.orquestrador(json.loads(aula.text))
 aula = treatments.treat_conteudo(aula)
-st.markdown(aula)
+st.markdown(type(aula))
 splitter = RecursiveCharacterTextSplitter(
     chunk_size=1000,
     chunk_overlap=400,
