@@ -8,6 +8,7 @@ import treatments
 from POC_v2 import get_aula_rag, interacao_inicial, estrutura_bloom, conversa
 from dotenv import load_dotenv
 import os
+import sqlite3
 
 #Setup 
 load_dotenv()
