@@ -55,7 +55,7 @@ quiz = requests.request("GET", url_quiz, headers=headers, data=payload)
 quiz=preparation_teste.read_teste(json.loads(quiz.text))
 learningUnit=quiz[0]['learningUnit']
 quiz = treatments.treat_quiz(quiz)
-
+st.markdown(quiz)
 #read previous conversation
 try:
     with open('conversation.pickle', 'rb') as conversation_pkl:
