@@ -6,7 +6,11 @@ import preparation_teste
 import preparation_aula
 import treatments
 from POC_v2 import get_aula_rag, interacao_inicial, estrutura_bloom, conversa
+from dotenv import load_dotenv
+import os
 
+#Setup 
+load_dotenv()
 
 st.set_page_config(layout="wide")
 st.title("Feedback personalizado de compreensão de conteúdo")
@@ -21,7 +25,7 @@ def update_history():
 @st.cache_data      
 def carregando_quiz(url_quiz,num_questao):
     payload={}
-    headers = {'Accept': 'application/json', 'x-secret': '148baeda-e1f2-11ec-8fea-0242ac120002' }
+    headers = {'Accept': 'application/json', 'x-secret': os.environ["ALEXANDRIA_SECRET"] }
     if url_quiz:
         print('if')
         pass
@@ -44,6 +48,8 @@ def carregando_quiz(url_quiz,num_questao):
     return quiz, num_questao, questao, alternas, conteudo_relacionado
 
 #delete
+payload={}
+headers = {'Accept': 'application/json', 'x-secret': os.environ["ALEXANDRIA_SECRET"] }
 url_quiz='https://cms-api-kroton.platosedu.io/api/v1/external/questions?learningUnits[]=c43265d4-22e5-45d1-be50-cd3a8ce50b2c&bankType=endOfUnit&quantity=5'
 quiz = requests.request("GET", url_quiz, headers=headers, data=payload)
 quiz=preparation_teste.read_teste(json.loads(quiz.text))
