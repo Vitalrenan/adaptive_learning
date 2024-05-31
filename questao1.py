@@ -8,6 +8,8 @@ import treatments
 from POC_v3 import get_aula_rag,  interacao_inicial,\
     interacao_secundaria, conversa, chat_memory
 from dotenv import load_dotenv
+import os
+import sqlite3
 
 #Setup 
 load_dotenv()
@@ -21,7 +23,7 @@ def update_history():
 @st.cache_data      
 def carregando_quiz(url_quiz,num_questao):
     payload={}
-    headers = {'Accept': 'application/json', 'x-secret': '148baeda-e1f2-11ec-8fea-0242ac120002' }
+    headers = {'Accept': 'application/json', 'x-secret': os.environ["ALEXANDRIA_SECRET"] }
     if url_quiz:
         pass
     else:
