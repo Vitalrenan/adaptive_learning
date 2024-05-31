@@ -5,8 +5,7 @@ import requests
 import preparation_teste
 import preparation_aula
 import treatments
-from POC_v3 import get_aula_rag,  interacao_inicial,\
-    interacao_secundaria, conversa, chat_memory
+from POC_v3 import get_aula_rag,  interacao_inicial, conversa, chat_memory
 from dotenv import load_dotenv
 import os
 import sqlite3
