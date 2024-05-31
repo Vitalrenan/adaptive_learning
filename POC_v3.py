@@ -1,3 +1,7 @@
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 import json
 import requests
 import preparation_aula
@@ -5,9 +9,15 @@ import treatments
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_openai import AzureOpenAIEmbeddings
 from langchain_community.vectorstores.chroma import Chroma
+from langchain.chains import SequentialChain
+from langchain.chains import LLMChain
+from langchain.prompts import ChatPromptTemplate
+from langchain.chains import ConversationChain
+from langchain.memory import ConversationSummaryBufferMemory
 from langchain_openai import AzureChatOpenAI
 from dotenv import load_dotenv
 import os
+
 
 #Setup 
 load_dotenv()
@@ -41,7 +51,7 @@ def chat_memory(questao, conteudo_relacionado):
 
 #rag
 def get_aula_rag(learningUnit, questao):
-
+    
     url_conteudo = f"https://cms-api-kroton.platosedu.io/api/v1/external/learning-units/{learningUnit}"
     aula = requests.request("GET", url_conteudo, headers=headers, data=payload)
     aula=preparation_aula.orquestrador(json.loads(aula.text))
